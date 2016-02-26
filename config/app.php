@@ -161,7 +161,9 @@ return [
          */
         QPay\Core\CoreServiceProvider::class,
         QPay\API\APIServiceProvider::class,
-        QPay\Web\WebServiceProvider::class
+        QPay\Web\WebServiceProvider::class,
+        QPay\Fraud\FraudServiceProvider::class,
+
     ],
 
     /*

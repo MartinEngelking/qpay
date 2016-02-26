@@ -1,0 +1,12 @@
+{
+    "name": "qpay/fraud",
+    "description": "Fraud screening logic for our fictional QPay merchant gateway.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Engelking",
+            "email": "martin.engelking@gmail.com"
+        }
+    ],
+    "require": {}
+}

@@ -23,7 +23,8 @@
             "App\\": "app/",
             "QPay\\Core\\": "packages/qpay/core/src/",
             "QPay\\API\\": "packages/qpay/api/src/",
-            "QPay\\Web\\": "packages/qpay/web/src/"
+            "QPay\\Web\\": "packages/qpay/web/src/",
+            "QPay\\Fraud\\": "packages/qpay/fraud/src/"
         }
     },
     "autoload-dev": {
