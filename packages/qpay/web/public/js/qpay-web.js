@@ -88,7 +88,7 @@ function submitForm(e) {
 function handleSubmission(data) {
     if(data.transaction) {
         list.addTransaction(data.transaction);
-        alert("Thank you!\n\nYour transaction has been submitted. I ran out of time to create a nice modal here. This transaction has been added to the list\n\n" + JSON.stringify(data.transaction));
+        showConfirmation(data.transaction);
     }
 }
 
@@ -111,8 +111,8 @@ function handleSubmissionError(data) {
 }
 
 function errorMsg(message) {
-    $('#errorMessage').html(message.replace(/\n/g, '<br/>'));
-    $('#errorMessage').removeClass('hidden');
+    $error.html(message.replace(/\n/g, '<br/>'));
+    $error.removeClass('hidden');
 
 }
 function highlightFields(fields) {
@@ -125,8 +125,24 @@ function clearFieldHighlights() {
     $('input.error').removeClass('error');
 }
 function clearErrorMsg() {
-    $('#errorMessage').html();
-    $('#errorMessage').addClass('hidden');
+    $error.html();
+    $error.addClass('hidden');
+}
+function showConfirmation(transaction) {
+    for(var key in transaction) {
+        if(!transaction.hasOwnProperty(key)) {
+            continue;
+        }
+        $elem = $('#confirm_' + key);
+        if($elem) {
+            $elem.html(transaction[key]);
+        }
+    }
+    $confirmation.removeClass('hidden');
+}
+
+function hideConfirmation(transaction) {
+    $confirmation.addClass('hidden');
 }
 
 /**
@@ -140,10 +156,13 @@ function fetchTransactions() {
         return transactions;
     });
 }
-var list, $form;
+var list, $form, $confirmation, $error;
 $(function() {
     list = new TransactionList($('table#transactionList'));
     fetchTransactions();
+    $error = $('#errorMessage');
+    $confirmation = $('#transactionConfirmation');
+    $('#closeConfirmation').click(hideConfirmation);
     $form = $('form#transactionForm');
     $form.submit(submitForm);
 });

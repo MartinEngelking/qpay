@@ -31,3 +31,27 @@ body {
 input.error {
     border: 2px solid red;
 }
+
+#transactionConfirmation {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #eeffee;
+    font-size: 1em;
+    padding: 2em;
+}
+#transactionConfirmation table {
+    margin: auto;
+}
+#transactionConfirmation td{
+    text-align: left;
+}
+#transactionConfirmation span {
+    font-weight: bold;
+}
+#transactionConfirmation a {
+    font-size: 2em;
+    font-weight: bold;
+}
