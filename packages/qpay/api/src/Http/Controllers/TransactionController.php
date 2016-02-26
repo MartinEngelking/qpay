@@ -1,6 +1,7 @@
 <?php
 namespace QPay\API\Http\Controllers;
 
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -8,6 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use QPay\Core\Geolocation;
 use QPay\Core\Transaction;
+use QPay\Fraud\FraudCheckException;
 
 class TransactionController extends Controller
 {
@@ -59,8 +61,26 @@ class TransactionController extends Controller
             return Response::json($response, 400);
         }
 
+        $attributes = $request->all();
+        $attributes['timestamp'] = date("Y-m-d H:i:s");
+        $transaction = null;
+        try {
+            $transaction = Transaction::create($attributes);
+        } catch (FraudCheckException $e) {
+            $response = [
+                "status" => "failed_fraud",
+                "errors" => $e->getErrors()
+            ];
+            return Response::json($response, 400);
+        } catch (Exception $e) {
+            return $this->_errorResponse($e->getMessage());
+        }
+
+        // todo: simulate payment submission here
+
         $status = 200;
         $response = [
+            'transaction' => $this->_responsifyTransaction($transaction),
             'status' => 'ok'
         ];
         return Response::json($response, $status);
