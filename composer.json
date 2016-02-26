@@ -22,7 +22,8 @@
         "psr-4": {
             "App\\": "app/",
             "QPay\\Core\\": "packages/qpay/core/src/",
-            "QPay\\API\\": "packages/qpay/api/src/"
+            "QPay\\API\\": "packages/qpay/api/src/",
+            "QPay\\Web\\": "packages/qpay/web/src/"
         }
     },
     "autoload-dev": {

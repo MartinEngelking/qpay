@@ -160,7 +160,8 @@ return [
          * QPay service providers...
          */
         QPay\Core\CoreServiceProvider::class,
-        QPay\API\APIServiceProvider::class
+        QPay\API\APIServiceProvider::class,
+        QPay\Web\WebServiceProvider::class
     ],
 
     /*
