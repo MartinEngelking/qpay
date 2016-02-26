@@ -1,7 +1,7 @@
-id,amount,merchant,address,zip,timestamp
-0,32.54,Shell Gas Station,1234 Test Lane,48226,2012-07-16 17:30:00
-1,45.23,Olive Garden,5523 Oak Street,48067,2012-07-16 19:45:00
-2,4.85,Starbucks Co,5111 Maple Drive,48067,2012-07-17 08:05:00
-3,24.90,Target,9913 Pinewood Avenue,48220,2012-07-17 10:13:00
-4,7.85,Bigby Coffee,208 E 14 Mile Rd,48107,2016-02-24 16:34
-5,4.99,Bigby Coffee,3600 W 12 Mile Rd,48072,2016-02-25 08:34
+amount,merchant,address,zip,timestamp
+32.54,Shell Gas Station,1234 Test Lane,48226,2012-07-16 17:30:00
+45.23,Olive Garden,5523 Oak Street,48067,2012-07-16 19:45:00
+4.85,Starbucks Co,5111 Maple Drive,48067,2012-07-17 08:05:00
+24.90,Target,9913 Pinewood Avenue,48220,2012-07-17 10:13:00
+7.85,Bigby Coffee,208 E 14 Mile Rd,48107,2016-02-24 16:34
+4.99,Bigby Coffee,3600 W 12 Mile Rd,48072,2016-02-25 08:34
