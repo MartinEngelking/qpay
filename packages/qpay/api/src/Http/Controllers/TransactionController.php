@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
+use QPay\Core\Transaction;
 
 class TransactionController extends Controller
 {
@@ -102,7 +103,7 @@ class TransactionController extends Controller
      * Returns an associative array describing a transaction.
      * Used to compose the output of our API.
      *
-     * @param $transaction \QPay\Core\Transaction
+     * @param $transaction Transaction
      * @return array
      */
     protected function _responsifyTransaction($transaction)
