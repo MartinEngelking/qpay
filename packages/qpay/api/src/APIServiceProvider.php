@@ -36,7 +36,6 @@ class APIServiceProvider extends ServiceProvider
             'namespace' => 'QPay\API\Http\Controllers',
             'prefix' => 'api'
         ], function ($router) {
-            $router = $this->app->router;
             require __DIR__ . '/Http/routes.php';
         });
     }
