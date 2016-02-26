@@ -15,6 +15,7 @@ class WebServiceProvider extends ServiceProvider
     {
         $this->loadViewsFrom(__DIR__ . '/../views', 'web');
         $this->setupRoutes();
+        $this->publishAssets();
     }
 
     /**
@@ -40,4 +41,15 @@ class WebServiceProvider extends ServiceProvider
             require __DIR__ . '/Http/routes.php';
         });
     }
+
+    /**
+     * Publishes assets, which in our case are the JS webapp and CSS.
+     */
+    public function publishAssets()
+    {
+        $this->publishes([
+            __DIR__.'/../public' => public_path('vendor/qpay'),
+        ], 'public');
+    }
+
 }
