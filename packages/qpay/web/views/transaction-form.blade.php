@@ -1,4 +1,4 @@
-<form role="form" id="transactionForm" action="{{route("store-transaction")}}">
+<form method="post" role="form" id="transactionForm" action="{{route("store-transaction")}}">
     <div class="form-group">
         <label for="name">Amount:</label> <input class="form-control" class="form-control" type="text" size="7"
                                                  name="amount" id="amount" placeholder="59.97"/>
