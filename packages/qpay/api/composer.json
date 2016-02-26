@@ -1,0 +1,12 @@
+{
+    "name": "qpay/api",
+    "description": "This package contains API logic for our fictional QPay merchant account.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Engelking",
+            "email": "martin.engelking@gmail.com"
+        }
+    ],
+    "require": {}
+}
