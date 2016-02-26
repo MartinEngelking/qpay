@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use QPay\Core\Transaction;
 
 class TransactionController extends Controller
@@ -32,6 +33,24 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|regex:/^\d+(\.\d+)?$/',
+            'name' => 'required',
+            'merchant' => 'required',
+            'address' => 'required',
+            'card' => 'required',
+            'exp' => 'required',
+            'zip' => 'required|regex:/^\d{5}$/'
+        ]);
+        if ($validator->fails()) {
+            $invalid_fields = $validator->errors()->keys();
+            $response = [
+                'status' => 'failed_validation',
+                'errors' => $invalid_fields
+            ];
+            return Response::json($response, 400);
+        }
+
         $status = 200;
         $response = [
             'status' => 'ok'
