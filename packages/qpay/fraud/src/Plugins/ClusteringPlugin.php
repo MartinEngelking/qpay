@@ -3,6 +3,7 @@ namespace QPay\Fraud\Plugins;
 require __DIR__ . '/../../vendor/autoload.php'; // todo: service provider
 
 use ErrorException;
+use Exception;
 use Jacobemerick\KMeans\KMeans;
 
 /**
@@ -20,8 +21,7 @@ abstract class ClusteringPlugin {
             $kmeans->cluster(2); // cluster into two sets
             return $kmeans->getClusteredData();
         } catch (ErrorException $e) {
-            echo "Error occurred during KMeans clustering: " . $e->getMessage() . "\n";
-            return [];
+            throw new Exception("Error occurred during KMeans clustering: " . $e->getMessage() . "\n");
         }
     }
 
