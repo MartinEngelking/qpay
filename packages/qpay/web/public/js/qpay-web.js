@@ -1,7 +1,6 @@
 var LIST_URL = '/api/v1/transactions'; // TODO: do not hardcode this here; get it automatically from the named route
 
 function TransactionList($table) {
-    this.first_load = true;
     this.columns = null;
     this.$table = $table;
     this.$tbody = $table.find('tbody');
@@ -58,11 +57,76 @@ TransactionList.prototype.grabHeader = function (transaction) {
  */
 TransactionList.prototype.renderHeader = function() {
     var $thead = this.$table.find('thead');
-    console.log(this.columns);
     $thead.html(
         '<tr><th>' + this.columns.join('</th><th>') + '</th></tr>'
     );
 };
+
+
+/**
+ * Submits the form
+ * @param e
+ */
+function submitForm(e) {
+    e.preventDefault();
+    clearFieldHighlights();
+    clearErrorMsg();
+    $.ajax({
+        url: $form.attr('action'),
+        type: 'post',
+        dataType: 'json',
+        data: $form.serialize(),
+        success: handleSubmission,
+        error: handleSubmissionError
+    });
+}
+
+/**
+ * Handles successful form submission
+ * @param data
+ */
+function handleSubmission(data) {
+    if(data.transaction) {
+        list.addTransaction(data.transaction);
+    }
+}
+
+/**
+ * Handles error submission
+ * @param data
+ */
+function handleSubmissionError(data) {
+    var response = data.responseJSON;
+    switch(response.status) {
+        case "failed_validation":
+            highlightFields(response.errors);
+            break;
+        case "failed_fraud":
+            errorMsg("This transaction is potentially fraudulent:\n" + response.errors.join("\n"));
+            break;
+        default:
+            alert("An error occurred:\n\n" + data.responseText);
+    }
+}
+
+function errorMsg(message) {
+    $('#errorMessage').html(message.replace(/\n/g, '<br/>'));
+    $('#errorMessage').removeClass('hidden');
+
+}
+function highlightFields(fields) {
+    fields.map( function(field) {
+        $('input#' + field).addClass('error');
+    });
+}
+
+function clearFieldHighlights() {
+    $('input.error').removeClass('error');
+}
+function clearErrorMsg() {
+    $('#errorMessage').html();
+    $('#errorMessage').addClass('hidden');
+}
 
 /**
  * Initial fetch of transactions
@@ -75,8 +139,10 @@ function fetchTransactions() {
         return transactions;
     });
 }
-var list;
+var list, $form;
 $(function() {
     list = new TransactionList($('table#transactionList'));
     fetchTransactions();
+    $form = $('form#transactionForm');
+    $form.submit(submitForm);
 });
