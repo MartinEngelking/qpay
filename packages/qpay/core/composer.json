@@ -1,0 +1,12 @@
+{
+    "name": "qpay/core",
+    "description": "QPay's core payment processing logic.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Engelking",
+            "email": "martin.engelking@gmail.com"
+        }
+    ],
+    "require": {}
+}
