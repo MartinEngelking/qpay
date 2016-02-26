@@ -13,7 +13,7 @@ use Exception;
 class Engine
 {
     const PLUGIN_NAMESPACE = '\\QPay\\Fraud\\Plugins\\';
-    protected $plugins = ['Location'];
+    protected $plugins = ['Location', 'Amount'];
 
     public function check($transaction)
     {
