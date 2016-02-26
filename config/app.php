@@ -156,6 +156,10 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * QPay service providers...
+         */
+        QPay\Core\CoreServiceProvider::class
     ],
 
     /*
