@@ -2,6 +2,7 @@
 namespace QPay\API\Http\Controllers;
 
 use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -36,54 +37,17 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'amount' => 'required|regex:/^\d+(\.\d+)?$/',
-            'merchant' => 'required',
-            'address' => 'required',
-            'zip' => 'required|regex:/^\d{5}$/'
-        ]);
-        if ($validator->fails()) {
-            $invalid_fields = $validator->errors()->keys();
-            $response = [
-                'status' => 'failed_validation',
-                'errors' => $invalid_fields
-            ];
-            return Response::json($response, 400);
+        
+        // todo: use generator function!
+        $response = $this->_validateRequest($request);
+        if($response) {
+            return $response;
         }
-
-        $location = Geolocation::where('zip', '=', $request->input('zip'))->first();
-        // todo DRY up the multiple responses
-        if(!$location) {
-            $response = [
-                'status' => 'failed_validation',
-                'errors' => ['zip']
-            ];
-            return Response::json($response, 400);
+        $response = $this->_validateZIP($request);
+        if($response) {
+            return $response;
         }
-
-        $attributes = $request->all();
-        $attributes['timestamp'] = date("Y-m-d H:i:s");
-        $transaction = null;
-        try {
-            $transaction = Transaction::create($attributes);
-        } catch (FraudCheckException $e) {
-            $response = [
-                "status" => "failed_fraud",
-                "errors" => $e->getErrors()
-            ];
-            return Response::json($response, 400);
-        } catch (Exception $e) {
-            return $this->_errorResponse($e->getMessage());
-        }
-
-        // todo: simulate payment submission here
-
-        $status = 200;
-        $response = [
-            'transaction' => $this->_responsifyTransaction($transaction),
-            'status' => 'ok'
-        ];
-        return Response::json($response, $status);
+        return $this->_processTransaction($request);
     }
 
     /**
@@ -141,7 +105,7 @@ class TransactionController extends Controller
      */
     private function _responsifyTransactions($transactions)
     {
-        return array_map(function($transaction) {
+        return array_map(function ($transaction) {
             return $this->_responsifyTransaction($transaction);
         }, $transactions);
     }
@@ -165,5 +129,67 @@ class TransactionController extends Controller
             'zip' => $transaction->geolocation->zip,
             'timestamp' => $transaction->timestamp
         ];
+    }
+
+    private function _validateRequest($request)
+    {
+        $validator = Validator::make($request->all(), [
+            'amount' => 'required|regex:/^\d+(\.\d+)?$/',
+            'merchant' => 'required',
+            'address' => 'required',
+            'zip' => 'required|regex:/^\d{5}$/'
+        ]);
+        if ($validator->fails()) {
+            $invalid_fields = $validator->errors()->keys();
+            $response = [
+                'status' => 'failed_validation',
+                'errors' => $invalid_fields
+            ];
+            return Response::json($response, 400);
+        }
+        return null;
+    }
+
+    private function _validateZIP($request)
+    {
+        $location = Geolocation::where('zip', '=', $request->input('zip'))->first();
+        // todo DRY up the multiple responses
+        if (!$location) {
+            $response = [
+                'status' => 'failed_validation',
+                'errors' => ['zip']
+            ];
+            return Response::json($response, 400);
+        }
+        return null;
+    }
+
+    private function _processTransaction($request)
+    {
+        $attributes = $request->all();
+        $attributes['timestamp'] = date("Y-m-d H:i:s");
+        $transaction = null;
+        try {
+            $transaction = Transaction::create($attributes);
+
+        } catch (FraudCheckException $e) {
+            $response = [
+                "status" => "failed_fraud",
+                "errors" => $e->getErrors()
+            ];
+            return Response::json($response, 400);
+        } catch (Exception $e) {
+            return $this->_errorResponse($e->getMessage());
+        }
+
+        // todo: simulate payment submission here
+
+        $status = 200;
+        $response = [
+            'transaction' => $this->_responsifyTransaction($transaction),
+            'status' => 'ok'
+        ];
+        return Response::json($response, $status);
+
     }
 }
