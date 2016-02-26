@@ -8,5 +8,10 @@
             "email": "martin.engelking@gmail.com"
         }
     ],
-    "require": {}
+    "psr-4": {
+        "Jacobemerick\\KMeans\\": "vendor/jacobemerick/kmeans/src"
+    },
+    "require": {
+        "jacobemerick/kmeans": "^1.0"
+    }
 }

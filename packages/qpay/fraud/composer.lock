@@ -1,0 +1,60 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "6465cebe8dc36f13fdedf3ffea202a90",
+    "content-hash": "8948bec697765cdf84bc663a444d3cd9",
+    "packages": [
+        {
+            "name": "jacobemerick/kmeans",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jacobemerick/kmeans.git",
+                "reference": "74808b7b65546e96449b0c8cca66b42236c4a6d8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jacobemerick/kmeans/zipball/74808b7b65546e96449b0c8cca66b42236c4a6d8",
+                "reference": "74808b7b65546e96449b0c8cca66b42236c4a6d8",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Jacobemerick\\KMeans\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jacob Emerick"
+                }
+            ],
+            "description": "k-means clustering implemented in PHP",
+            "keywords": [
+                "clustering",
+                "data analysis",
+                "k-means",
+                "statistics"
+            ],
+            "time": "2014-07-31 00:59:28"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
