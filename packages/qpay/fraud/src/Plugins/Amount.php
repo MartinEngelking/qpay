@@ -4,6 +4,14 @@ namespace QPay\Fraud\Plugins;
 use Illuminate\Support\Facades\DB;
 use QPay\Fraud\FraudPluginException;
 
+/**
+ * Class Amount
+ *
+ * I spent the least time here, having simply run out... This and its sister class, Location, could use some work.
+ *
+ *
+ * @package QPay\Fraud\Plugins
+ */
 class Amount extends ClusteringPlugin {
 
     public function check($transaction) {
