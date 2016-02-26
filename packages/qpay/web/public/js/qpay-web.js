@@ -88,6 +88,7 @@ function submitForm(e) {
 function handleSubmission(data) {
     if(data.transaction) {
         list.addTransaction(data.transaction);
+        alert("Thank you!\n\nYour transaction has been submitted. I ran out of time to create a nice modal here. This transaction has been added to the list\n\n" + JSON.stringify(data.transaction));
     }
 }
 

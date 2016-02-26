@@ -19,8 +19,9 @@ body {
 
 #errorMessage {
     font-weight: bold;
-    font-size: 2em;
-    color: #500;
+    font-size: 1.5em;
+    color: #900;
+    border: solid 1px #900;
 }
 
 #transactionList {
