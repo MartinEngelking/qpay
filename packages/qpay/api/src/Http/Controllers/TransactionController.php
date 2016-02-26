@@ -65,7 +65,7 @@ class TransactionController extends Controller
             'status' => 'ok'
         ];
 
-        return Response::json($response, 500);
+        return Response::json($response, 200);
 
     }
 
