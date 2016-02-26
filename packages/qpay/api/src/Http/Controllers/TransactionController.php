@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
+use QPay\Core\Geolocation;
 use QPay\Core\Transaction;
 
 class TransactionController extends Controller
@@ -35,11 +36,8 @@ class TransactionController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'amount' => 'required|regex:/^\d+(\.\d+)?$/',
-            'name' => 'required',
             'merchant' => 'required',
             'address' => 'required',
-            'card' => 'required',
-            'exp' => 'required',
             'zip' => 'required|regex:/^\d{5}$/'
         ]);
         if ($validator->fails()) {
@@ -47,6 +45,16 @@ class TransactionController extends Controller
             $response = [
                 'status' => 'failed_validation',
                 'errors' => $invalid_fields
+            ];
+            return Response::json($response, 400);
+        }
+
+        $location = Geolocation::where('zip', '=', $request->input('zip'))->first();
+        // todo DRY up the multiple responses
+        if(!$location) {
+            $response = [
+                'status' => 'failed_validation',
+                'errors' => ['zip']
             ];
             return Response::json($response, 400);
         }
