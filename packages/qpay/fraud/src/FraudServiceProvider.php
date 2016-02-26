@@ -2,6 +2,7 @@
 
 namespace QPay\Fraud;
 use Illuminate\Support\ServiceProvider;
+use QPay\Core\Transaction;
 
 class FraudServiceProvider extends ServiceProvider
 {
@@ -12,7 +13,11 @@ class FraudServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Transaction::creating(function($transaction) {
+            $fraud_engine = $this->app->make('fraud-engine');
+            $fraud_engine->check($transaction);
+            return true;
+        });
     }
 
     /**
@@ -22,6 +27,8 @@ class FraudServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       //
+        $this->app->singleton('fraud-engine', function ($app) {
+            return new Engine();
+        });
     }
 }
