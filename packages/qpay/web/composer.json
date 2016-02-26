@@ -1,0 +1,12 @@
+{
+    "name": "qpay/web",
+    "description": "The web front-end for our hypothetical QPay merchant gateway. Implements our transaction entry page; talks to API.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Martin Engelking",
+            "email": "martin.engelking@gmail.com"
+        }
+    ],
+    "require": {}
+}
